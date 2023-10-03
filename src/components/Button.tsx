@@ -5,7 +5,7 @@ type ButtonProps = {
 }
 
 export function Button ({ children, size = 'normal', variant = 'primary' }: ButtonProps) {
-  const fontSize = size === 'small' ? 'text-xs' : 'text-base'
+  const fontSize = size === 'small' ? 'text-sm' : 'text-base'
   const padding = size === 'small' ? 'px-4 py-2' : 'px-6 py-2'
   const color = {
     primary: 'text-white bg-[#50C00D] hover:bg-gray-900 hover:shadow-gray-950',
