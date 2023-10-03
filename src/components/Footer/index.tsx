@@ -1,10 +1,16 @@
 import { SocialMediaItem } from './SocialMediaLink'
 import { links } from './data'
 
+import { ReactComponent as FooterGrid1 } from '@/assets/footer-grid-1.svg'
+import { ReactComponent as FooterGrid2 } from '@/assets/footer-grid-2.svg'
+
 export function Footer () {
   return (
-    <footer className='bg-[#FAE39B]'>
-      <div className='max-w-7xl flex px-4 py-4 mx-auto pt-20 items-end'>
+    <footer className='bg-[#FAE39B] relative z-0'>
+      <FooterGrid1 className='absolute top-0 left-0 z-10' aria-hidden='true' />
+      <FooterGrid2 className='absolute top-0 -right-2 z-10' aria-hidden='true' />
+
+      <div className='max-w-7xl flex px-4 py-4 mx-auto pt-20 items-end relative z-20'>
         <div className='flex-[4] text-[#132B3F]'>
           <h1 className='font-pixel text-2xl uppercase mb-8'>
             Official <br />
