@@ -1,0 +1,42 @@
+{
+  "name": "boilerplate-ts-react",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext ts,tsx",
+    "lint:fix": "yarn lint --fix",
+    "type-check": "tsc --project tsconfig.json --pretty --noEmit",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.8.2",
+    "@types/react": "18.2.19",
+    "@types/react-dom": "18.2.7",
+    "@typescript-eslint/eslint-plugin": "6.3.0",
+    "@typescript-eslint/parser": "6.3.0",
+    "@vitejs/plugin-react": "4.0.4",
+    "autoprefixer": "^10.4.16",
+    "eslint": "8.46.0",
+    "eslint-config-standard": "17.1.0",
+    "eslint-plugin-import": "2.28.0",
+    "eslint-plugin-n": "16.0.1",
+    "eslint-plugin-promise": "6.1.1",
+    "eslint-plugin-react": "7.33.1",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "husky": "8.0.3",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.3",
+    "typescript": "5.1.6",
+    "vite": "4.4.9",
+    "vite-plugin-svgr": "3.2.0",
+    "vite-tsconfig-paths": "4.2.0"
+  }
+}
