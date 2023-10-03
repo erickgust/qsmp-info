@@ -1,7 +1,5 @@
-import { Button } from '../Button'
+import { SocialMediaItem } from './SocialMediaLink'
 import { links } from './data'
-
-import { icons } from '@/assets/icons'
 
 export function Footer () {
   return (
@@ -26,14 +24,12 @@ export function Footer () {
         <aside className='flex-1'>
           <ul className='flex gap-5 gap-y-6 flex-wrap justify-end'>
             {links.map((link) => (
-              <li key={link.url} className='inline-block'>
-                <a href={link.url} target='_blank' rel='noopener noreferrer'>
-                  <Button size='small' variant='white'>
-                    <img src={icons.get(link.icon)} alt='' />
-                    {link.name}
-                  </Button>
-                </a>
-              </li>
+              <SocialMediaItem
+                key={link.url}
+                name={link.name}
+                icon={link.icon}
+                url={link.url}
+              />
             ))}
           </ul>
         </aside>
