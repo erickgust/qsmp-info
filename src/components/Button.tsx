@@ -18,7 +18,7 @@ export function Button ({ children, size = 'normal', variant = 'primary' }: Butt
       className={`
         font-pixel uppercase ${fontSize} ${padding} ${color}
         shadow-[0px_6px_0px_#499F13] leading-none transition-all duration-150
-        flex gap-2 items-center
+        flex gap-4 items-center
       `}
     >
       {children}
