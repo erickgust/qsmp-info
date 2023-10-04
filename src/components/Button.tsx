@@ -3,9 +3,16 @@ type ButtonProps = {
   size?: 'small' | 'normal'
   variant?: 'primary' | 'dark' | 'white'
   type?: 'icon' | 'text'
+  onClick?: () => void
 }
 
-export function Button ({ children, size = 'normal', variant = 'primary', type = 'text' }: ButtonProps) {
+export function Button ({
+  children,
+  size = 'normal',
+  variant = 'primary',
+  type = 'text',
+  onClick,
+}: ButtonProps) {
   const fontSize = size === 'small' ? 'text-sm' : 'text-base'
   const paddingX = size === 'small' ? 'px-4' : 'px-8'
   const paddingXIcon = type === 'icon' ? 'px-3' : paddingX
@@ -23,6 +30,7 @@ export function Button ({ children, size = 'normal', variant = 'primary', type =
         shadow-[0px_6px_0px_#499F13] leading-none transition-all duration-150
         flex gap-4 items-center
       `}
+      onClick={onClick}
     >
       {children}
     </button>
