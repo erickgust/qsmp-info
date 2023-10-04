@@ -7,8 +7,8 @@ type ButtonProps = {
 
 export function Button ({ children, size = 'normal', variant = 'primary', type = 'text' }: ButtonProps) {
   const fontSize = size === 'small' ? 'text-sm' : 'text-base'
-  const paddingX = size === 'small' ? 'px-4' : 'px-6'
-  const paddingXIcon = type === 'icon' ? 'px-4' : paddingX
+  const paddingX = size === 'small' ? 'px-4' : 'px-8'
+  const paddingXIcon = type === 'icon' ? 'px-3' : paddingX
   const height = size === 'small' ? 'h-10' : 'h-14'
   const color = {
     primary: 'text-white bg-[#50C00D] hover:bg-gray-900 hover:shadow-gray-950',
