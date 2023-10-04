@@ -6,7 +6,7 @@ import { ReactComponent as FooterGrid2 } from '@/assets/footer-grid-2.svg'
 
 export function Footer () {
   return (
-    <footer className='bg-[#FAE39B] relative z-0'>
+    <footer className='bg-[#FAE39B] relative z-0 overflow-hidden'>
       <FooterGrid1 className='absolute top-0 left-0 z-10' aria-hidden='true' />
       <FooterGrid2 className='absolute top-0 -right-2 z-10' aria-hidden='true' />
 

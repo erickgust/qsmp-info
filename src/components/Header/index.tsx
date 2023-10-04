@@ -6,7 +6,7 @@ import { Timer } from '../Timer'
 
 export function Header () {
   return (
-    <header className='h-60 bg-[#1F1E33] relative z-0 px-36'>
+    <header className='h-60 bg-[#1F1E33] relative z-0 px-36 overflow-hidden'>
       <HeaderGrid1 className='absolute top-0 left-0 z-10' aria-hidden='true' />
       <HeaderGrid2 className='absolute top-0 -right-2 z-10' aria-hidden='true' />
 
