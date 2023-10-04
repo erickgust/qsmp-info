@@ -16,11 +16,13 @@ export function Header () {
             Rirus adipiscing mauris cum non est enim a. Quis commodo sit sed lectus ac est.
           </p>
 
-          <Button>
-            <span className='pt-[0.125rem]'>See announcement</span>
+          <a href='https://twitter.com/QuackityStudios' rel='noopener noreferrer' target='_blank'>
+            <Button>
+              <span className='pt-[0.125rem]'>See announcement</span>
 
-            <ExternalLinkIcon />
-          </Button>
+              <ExternalLinkIcon />
+            </Button>
+          </a>
         </div>
 
         <div className='flex-1'>
