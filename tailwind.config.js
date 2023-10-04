@@ -9,6 +9,12 @@ export default {
       fontFamily: {
         pixel: ['"Minecraft-Bold"', 'sans-serif'],
       },
+      height: {
+        88: '22rem',
+      },
+      width: {
+        88: '22rem',
+      },
     },
   },
   plugins: [],
