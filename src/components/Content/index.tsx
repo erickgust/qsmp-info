@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Member } from './Member'
 import { Member as MemberType, members } from './data'
+import { Button } from '../Button'
+import { ReactComponent as ArrowLeft } from '@/assets/icons/arrow-left.svg'
+import { ReactComponent as ArrowRight } from '@/assets/icons/arrow-right.svg'
 
 const accessToken = import.meta.env.VITE_TWITCH_ACCESS_TOKEN
 const clientID = import.meta.env.VITE_TWITCH_CLIENT_ID
@@ -65,21 +68,35 @@ export function Content () {
         Members of the server
       </h1>
 
-      <ul className='flex gap-20 mt-10 overflow-x-scroll'>
-        {memberStreams.map((member) => (
-          <Member
-            key={member.twitchName}
-            flag={{
-              url: `https://flagcdn.com/w40/${member.country.ISOCode.toLowerCase()}.png`,
-              alt: member.country.name,
-            }}
-            image={member.avatarURL}
-            isLive={member.isLive}
-            liveChannelURL={member.liveChannelURL}
-            name={member.name}
-          />
-        ))}
-      </ul>
+      <div className='relative'>
+        <span className='absolute top-1/2 -translate-y-1/2 -left-4 z-10'>
+          <Button type='icon'>
+            <ArrowLeft className='ml-1' />
+          </Button>
+        </span>
+
+        <ul className='flex gap-20 mt-10 overflow-x-scroll'>
+          {memberStreams.map((member) => (
+            <Member
+              key={member.twitchName}
+              flag={{
+                url: `https://flagcdn.com/w40/${member.country.ISOCode.toLowerCase()}.png`,
+                alt: member.country.name,
+              }}
+              image={member.avatarURL}
+              isLive={member.isLive}
+              liveChannelURL={member.liveChannelURL}
+              name={member.name}
+            />
+          ))}
+        </ul>
+
+        <span className='absolute top-1/2 -translate-y-1/2 -right-4'>
+          <Button type='icon'>
+            <ArrowRight className='mr-1' />
+          </Button>
+        </span>
+      </div>
     </section>
   )
 }
