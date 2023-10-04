@@ -16,7 +16,12 @@ export function Header () {
             Rirus adipiscing mauris cum non est enim a. Quis commodo sit sed lectus ac est.
           </p>
 
-          <a href='https://twitter.com/QuackityStudios' rel='noopener noreferrer' target='_blank'>
+          <a
+            href='https://twitter.com/QuackityStudios'
+            rel='noopener noreferrer'
+            target='_blank'
+            className='inline-block'
+          >
             <Button>
               <span className='pt-[0.125rem]'>See announcement</span>
 
