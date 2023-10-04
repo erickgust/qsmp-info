@@ -2,11 +2,14 @@ type ButtonProps = {
   children: React.ReactNode
   size?: 'small' | 'normal'
   variant?: 'primary' | 'dark' | 'white'
+  type?: 'icon' | 'text'
 }
 
-export function Button ({ children, size = 'normal', variant = 'primary' }: ButtonProps) {
+export function Button ({ children, size = 'normal', variant = 'primary', type = 'text' }: ButtonProps) {
   const fontSize = size === 'small' ? 'text-sm' : 'text-base'
-  const padding = size === 'small' ? 'px-4 py-2' : 'px-6 py-2'
+  const paddingX = size === 'small' ? 'px-4' : 'px-6'
+  const paddingXIcon = type === 'icon' ? 'px-4' : paddingX
+  const height = size === 'small' ? 'h-10' : 'h-14'
   const color = {
     primary: 'text-white bg-[#50C00D] hover:bg-gray-900 hover:shadow-gray-950',
     dark: 'text-white bg-gray-900 shadow-gray-950 hover:bg-[#50C00D] hover:shadow-[0px_6px_0px_#499F13]',
@@ -16,7 +19,7 @@ export function Button ({ children, size = 'normal', variant = 'primary' }: Butt
   return (
     <button
       className={`
-        font-pixel uppercase ${fontSize} ${padding} ${color}
+        font-pixel uppercase ${height} ${fontSize} ${paddingXIcon} ${color}
         shadow-[0px_6px_0px_#499F13] leading-none transition-all duration-150
         flex gap-4 items-center
       `}
