@@ -4,7 +4,7 @@ import { Header } from './components/Header'
 
 function App () {
   return (
-    <main className='h-full'>
+    <main className='flex flex-col min-h-full'>
       <Header />
       <Content />
       <Footer />

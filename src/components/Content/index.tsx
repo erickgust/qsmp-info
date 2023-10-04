@@ -109,7 +109,7 @@ export function Content () {
   }
 
   return (
-    <section className='px-8 my-16 h-full flex flex-col justify-center'>
+    <section className='px-8 py-16 flex-1 flex flex-col justify-center'>
       <h1 className='font-pixel text-4xl uppercase'>
         Members of the server
       </h1>
