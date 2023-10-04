@@ -123,7 +123,7 @@ export function Content () {
           </span>
         )}
 
-        <ul className='flex gap-20 mt-10 overflow-x-scroll' ref={memberListRef}>
+        <ul className='flex gap-20 mt-10 overflow-x-scroll hide-scroll' ref={memberListRef}>
           {memberStreams.map((member) => (
             <Member
               key={member.twitchName}
