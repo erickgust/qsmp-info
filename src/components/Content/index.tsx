@@ -21,8 +21,6 @@ export function Content () {
 
       const { data } = await response.json()
 
-      console.log(data)
-
       setMemberStreams((prev) => {
         const newState = prev.map((member) => {
           const stream = data.find((stream: any) => {
@@ -54,7 +52,11 @@ export function Content () {
       })
     }
 
-    getMemberStreams()
+    try {
+      getMemberStreams()
+    } catch (err) {
+      console.error(err)
+    }
   }, [])
 
   return (
