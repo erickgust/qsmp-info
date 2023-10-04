@@ -12,8 +12,8 @@ export function SocialMediaItem ({ name, icon, url }: SocialMediaItemProps) {
     <li key={url} className='inline-block'>
       <a href={url} target='_blank' rel='noopener noreferrer'>
         <Button size='small' variant='white'>
-          <img src={icons.get(icon)} alt='' />
-          {name}
+          <img src={icons.get(icon)} alt={icon} />
+          <span className='pt-[0.125rem]'>{name}</span>
         </Button>
       </a>
     </li>
