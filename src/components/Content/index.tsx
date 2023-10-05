@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
-import { Member } from './Member'
-import { Member as MemberType, members } from './data'
+import { MemberCard } from './MemberCard'
+import { Member, members } from './data'
 import { Button } from '../Button'
 import { ReactComponent as ArrowLeft } from '@/assets/icons/arrow-left.svg'
 import { ReactComponent as ArrowRight } from '@/assets/icons/arrow-right.svg'
@@ -11,7 +11,7 @@ const clientID = import.meta.env.VITE_TWITCH_CLIENT_ID
 const URL = 'https://api.twitch.tv/helix/streams?user_login=BadBoyHalo&user_login=fitmc&user_login=felps&user_login=Foolish_Gamers&user_login=ironmouse&user_login=jaidenanimations&user_login=quackity&user_login=tubbo&user_login=roier&user_login=bagi&user_login=peqitw&user_login=bagherajones'
 
 export function Content () {
-  const [memberStreams, setMemberStreams] = useState<MemberType[]>(members)
+  const [memberStreams, setMemberStreams] = useState<Member[]>(members)
   const [showLeftArrow, setShowLeftArrow] = useState(false)
   const [showRightArrow, setShowRightArrow] = useState(true)
   const memberListRef = useRef<HTMLUListElement>(null)
@@ -125,7 +125,7 @@ export function Content () {
 
         <ul className='flex gap-20 mt-10 overflow-x-scroll hide-scroll' ref={memberListRef}>
           {memberStreams.map((member) => (
-            <Member
+            <MemberCard
               key={member.twitchName}
               flag={{
                 url: `https://flagcdn.com/w40/${member.country.ISOCode.toLowerCase()}.png`,

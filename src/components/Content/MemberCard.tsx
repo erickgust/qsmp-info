@@ -13,7 +13,7 @@ type MemberProps = {
   isLive: boolean
 }
 
-export function Member ({ name, image, flag, liveChannelURL, isLive }: MemberProps) {
+export function MemberCard ({ name, image, flag, liveChannelURL, isLive }: MemberProps) {
   return (
     <article className='w-88 min-w-max bg-neutral-100 relative'>
       {isLive && (
