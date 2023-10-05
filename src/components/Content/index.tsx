@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 import { MemberCard } from './MemberCard'
 import { Member, members } from './data'
 import { Button } from '../Button'
@@ -6,12 +6,16 @@ import { ReactComponent as ArrowLeft } from '@/assets/icons/arrow-left.svg'
 import { ReactComponent as ArrowRight } from '@/assets/icons/arrow-right.svg'
 import { sortByOnlineStreams } from '@/utils/sortByOnlineStreams'
 import { membersServices } from '@/services/members-services'
+import { useScroll } from './useScroll'
 
 export function Content () {
   const [memberStreams, setMemberStreams] = useState<Member[]>(members)
-  const [showLeftArrow, setShowLeftArrow] = useState(false)
-  const [showRightArrow, setShowRightArrow] = useState(true)
-  const memberListRef = useRef<HTMLUListElement>(null)
+  const {
+    elementRef,
+    showLeftArrow,
+    showRightArrow,
+    handleScroll,
+  } = useScroll<HTMLUListElement>()
   const firstRender = useRef(true)
 
   useEffect(() => {
@@ -32,49 +36,6 @@ export function Content () {
     }
   }, [memberStreams])
 
-  useEffect(() => {
-    if (!memberListRef.current) {
-      return
-    }
-    const memberList = memberListRef.current
-
-    function handleArrowVisibility () {
-      setShowLeftArrow(memberList.scrollLeft > 0)
-      setShowRightArrow(memberList.scrollLeft < memberList.scrollWidth - memberList.clientWidth - 10)
-    }
-
-    memberList.addEventListener('scroll', handleArrowVisibility)
-
-    return () => {
-      memberList.removeEventListener('scroll', handleArrowVisibility)
-    }
-  }, [memberListRef])
-
-  function handleScroll (direction: 'left' | 'right') {
-    const memberList = memberListRef.current
-
-    if (!memberList) {
-      return
-    }
-
-    const { scrollLeft } = memberList
-    const { offsetWidth } = memberList.firstElementChild as HTMLLIElement
-
-    if (direction === 'left') {
-      memberList.scrollTo({
-        left: scrollLeft - (offsetWidth + 80) * 3,
-        behavior: 'smooth',
-      })
-    }
-
-    if (direction === 'right') {
-      memberList.scrollTo({
-        left: scrollLeft + (offsetWidth + 80) * 3,
-        behavior: 'smooth',
-      })
-    }
-  }
-
   return (
     <section className='px-8 py-48 flex-1 flex flex-col justify-center'>
       <h1 className='font-pixel text-4xl uppercase'>
@@ -90,7 +51,7 @@ export function Content () {
           </span>
         )}
 
-        <ul className='flex gap-20 mt-12 overflow-x-scroll hide-scroll' ref={memberListRef}>
+        <ul className='flex gap-20 mt-12 overflow-x-scroll hide-scroll' ref={elementRef}>
           {memberStreams.map((member) => (
             <MemberCard
               key={member.liveChannelURL}
