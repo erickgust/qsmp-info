@@ -5,16 +5,7 @@ import { Button } from '../Button'
 import { ReactComponent as ArrowLeft } from '@/assets/icons/arrow-left.svg'
 import { ReactComponent as ArrowRight } from '@/assets/icons/arrow-right.svg'
 import { sortByOnlineStreams } from '@/utils/sortByOnlineStreams'
-import { get } from '@/utils/http'
-
-type Stream = {
-  user_id: string
-  user_login: string
-}
-
-type StreamResponse = {
-  data: Stream[]
-}
+import { membersServices } from '@/services/members-services'
 
 export function Content () {
   const [memberStreams, setMemberStreams] = useState<Member[]>(members)
@@ -25,41 +16,18 @@ export function Content () {
 
   useEffect(() => {
     async function getMemberStreams () {
-      const memberLogins = members.flatMap(member => member.twitchNames)
-      const { data } = await get<StreamResponse>(memberLogins)
+      try {
+        const availableStreams = await membersServices.listAvailableStreams(memberStreams)
+        const sortedAvailableStreams = sortByOnlineStreams(availableStreams)
 
-      const streams = data.map(stream => stream.user_login)
-
-      const getMemberStream = (member: Member) => member.twitchNames.find(
-        userName => streams.includes(userName.toLowerCase()),
-      )
-
-      setMemberStreams(prevMemberStreams => {
-        const availableStreams = prevMemberStreams.map(member => {
-          const stream = getMemberStream(member)
-
-          if (stream) {
-            return {
-              ...member,
-              isLive: true,
-              liveChannelURL: `https://twitch.tv/${stream}`,
-            }
-          }
-
-          return member
-        })
-
-        return sortByOnlineStreams(availableStreams)
-      })
+        setMemberStreams(sortedAvailableStreams)
+      } catch {
+        console.error('Failed to get member streams')
+      }
     }
 
     if (firstRender.current) {
-      try {
-        getMemberStreams()
-      } catch (err) {
-        console.error(err)
-      }
-
+      getMemberStreams()
       firstRender.current = false
     }
   }, [memberStreams])
