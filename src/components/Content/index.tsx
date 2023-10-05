@@ -4,11 +4,12 @@ import { Member, members } from './data'
 import { Button } from '../Button'
 import { ReactComponent as ArrowLeft } from '@/assets/icons/arrow-left.svg'
 import { ReactComponent as ArrowRight } from '@/assets/icons/arrow-right.svg'
+import { sortByOnlineStreams } from '@/utils/sortByOnlineStreams'
 
 const accessToken = import.meta.env.VITE_TWITCH_ACCESS_TOKEN
 const clientID = import.meta.env.VITE_TWITCH_CLIENT_ID
 
-const URL = 'https://api.twitch.tv/helix/streams?user_login=BadBoyHalo&user_login=fitmc&user_login=felps&user_login=Foolish_Gamers&user_login=ironmouse&user_login=jaidenanimations&user_login=quackity&user_login=tubbo&user_login=roier&user_login=bagi&user_login=peqitw&user_login=bagherajones'
+const baseUrl = 'https://api.twitch.tv/helix/streams'
 
 type Stream = {
   user_id: string
@@ -20,10 +21,19 @@ export function Content () {
   const [showLeftArrow, setShowLeftArrow] = useState(false)
   const [showRightArrow, setShowRightArrow] = useState(true)
   const memberListRef = useRef<HTMLUListElement>(null)
+  const firstRender = useRef(true)
 
   useEffect(() => {
     async function getMemberStreams () {
-      const response = await fetch(URL, {
+      const url = new URL(baseUrl)
+
+      memberStreams.forEach(member => {
+        member.twitchNames.forEach(userName => {
+          url.searchParams.append('user_login', userName)
+        })
+      })
+
+      const response = await fetch(url, {
         headers: {
           'Client-ID': clientID,
           Authorization: `Bearer ${accessToken}`,
@@ -32,43 +42,39 @@ export function Content () {
 
       const { data } = await response.json() as { data: Stream[] }
 
-      const streams = new Map(data.map(stream => [stream.user_login, stream]))
+      const streams = data.map(stream => stream.user_login)
 
       const getMemberStream = (member: Member) => member.twitchNames.find(
-        userName => streams.has(userName.toLowerCase()),
+        userName => streams.includes(userName.toLowerCase()),
       )
 
-      const availableStreams = memberStreams.map(member => {
-        const stream = getMemberStream(member)
+      setMemberStreams(prevMemberStreams => {
+        const availableStreams = prevMemberStreams.map(member => {
+          const stream = getMemberStream(member)
 
-        if (stream) {
-          return {
-            ...member,
-            isLive: true,
-            liveChannelURL: `https://twitch.tv/${stream}`,
+          if (stream) {
+            return {
+              ...member,
+              isLive: true,
+              liveChannelURL: `https://twitch.tv/${stream}`,
+            }
           }
-        }
 
-        return member
+          return member
+        })
+
+        return sortByOnlineStreams(availableStreams)
       })
-
-      setMemberStreams(availableStreams.sort((a, b) => {
-        if (a.isLive && !b.isLive) {
-          return -1
-        }
-
-        if (!a.isLive && b.isLive) {
-          return 1
-        }
-
-        return 0
-      }))
     }
 
-    try {
-      getMemberStreams()
-    } catch (err) {
-      console.error(err)
+    if (firstRender.current) {
+      try {
+        getMemberStreams()
+      } catch (err) {
+        console.error(err)
+      }
+
+      firstRender.current = false
     }
   }, [memberStreams])
 
