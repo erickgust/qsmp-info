@@ -5,15 +5,15 @@ import { Button } from '../Button'
 import { ReactComponent as ArrowLeft } from '@/assets/icons/arrow-left.svg'
 import { ReactComponent as ArrowRight } from '@/assets/icons/arrow-right.svg'
 import { sortByOnlineStreams } from '@/utils/sortByOnlineStreams'
-
-const accessToken = import.meta.env.VITE_TWITCH_ACCESS_TOKEN
-const clientID = import.meta.env.VITE_TWITCH_CLIENT_ID
-
-const baseUrl = 'https://api.twitch.tv/helix/streams'
+import { get } from '@/utils/http'
 
 type Stream = {
   user_id: string
   user_login: string
+}
+
+type StreamResponse = {
+  data: Stream[]
 }
 
 export function Content () {
@@ -25,22 +25,8 @@ export function Content () {
 
   useEffect(() => {
     async function getMemberStreams () {
-      const url = new URL(baseUrl)
-
-      memberStreams.forEach(member => {
-        member.twitchNames.forEach(userName => {
-          url.searchParams.append('user_login', userName)
-        })
-      })
-
-      const response = await fetch(url, {
-        headers: {
-          'Client-ID': clientID,
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-
-      const { data } = await response.json() as { data: Stream[] }
+      const memberLogins = members.flatMap(member => member.twitchNames)
+      const { data } = await get<StreamResponse>(memberLogins)
 
       const streams = data.map(stream => stream.user_login)
 
