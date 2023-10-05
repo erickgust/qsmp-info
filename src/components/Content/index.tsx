@@ -53,17 +53,18 @@ export function Content () {
 
         <ul className='flex gap-20 mt-12 overflow-x-scroll hide-scroll' ref={elementRef}>
           {memberStreams.map((member) => (
-            <MemberCard
-              key={member.liveChannelURL}
-              flag={{
-                url: `https://flagcdn.com/w40/${member.country.ISOCode.toLowerCase()}.png`,
-                alt: member.country.name,
-              }}
-              image={member.avatarURL}
-              isLive={member.isLive}
-              liveChannelURL={member.liveChannelURL}
-              name={member.name}
-            />
+            <li key={member.liveChannelURL}>
+              <MemberCard
+                flag={{
+                  url: `https://flagcdn.com/w40/${member.country.ISOCode.toLowerCase()}.png`,
+                  alt: member.country.name,
+                }}
+                image={member.avatarURL}
+                isLive={member.isLive}
+                liveChannelURL={member.liveChannelURL}
+                name={member.name}
+              />
+            </li>
           ))}
         </ul>
 
