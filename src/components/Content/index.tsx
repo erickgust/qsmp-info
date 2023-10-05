@@ -10,6 +10,11 @@ const clientID = import.meta.env.VITE_TWITCH_CLIENT_ID
 
 const URL = 'https://api.twitch.tv/helix/streams?user_login=BadBoyHalo&user_login=fitmc&user_login=felps&user_login=Foolish_Gamers&user_login=ironmouse&user_login=jaidenanimations&user_login=quackity&user_login=tubbo&user_login=roier&user_login=bagi&user_login=peqitw&user_login=bagherajones'
 
+type Stream = {
+  user_id: string
+  user_login: string
+}
+
 export function Content () {
   const [memberStreams, setMemberStreams] = useState<Member[]>(members)
   const [showLeftArrow, setShowLeftArrow] = useState(false)
@@ -25,37 +30,39 @@ export function Content () {
         },
       })
 
-      const { data } = await response.json()
+      const { data } = await response.json() as { data: Stream[] }
 
-      setMemberStreams((prev) => {
-        const newState = prev.map((member) => {
-          const stream = data.find((stream: any) => {
-            return stream.user_name.toLowerCase() === member.twitchName.toLowerCase()
-          })
+      const streams = new Map(data.map(stream => [stream.user_login, stream]))
 
-          if (stream) {
-            return {
-              ...member,
-              isLive: true,
-              liveChannelURL: `https://twitch.tv/${member.twitchName}`,
-            }
+      const getMemberStream = (member: Member) => member.twitchNames.find(
+        userName => streams.has(userName.toLowerCase()),
+      )
+
+      const availableStreams = memberStreams.map(member => {
+        const stream = getMemberStream(member)
+
+        if (stream) {
+          return {
+            ...member,
+            isLive: true,
+            liveChannelURL: `https://twitch.tv/${stream}`,
           }
+        }
 
-          return member
-        })
-
-        return newState.sort((a, b) => {
-          if (a.isLive && !b.isLive) {
-            return -1
-          }
-
-          if (!a.isLive && b.isLive) {
-            return 1
-          }
-
-          return 0
-        })
+        return member
       })
+
+      setMemberStreams(availableStreams.sort((a, b) => {
+        if (a.isLive && !b.isLive) {
+          return -1
+        }
+
+        if (!a.isLive && b.isLive) {
+          return 1
+        }
+
+        return 0
+      }))
     }
 
     try {
@@ -63,7 +70,7 @@ export function Content () {
     } catch (err) {
       console.error(err)
     }
-  }, [])
+  }, [memberStreams])
 
   useEffect(() => {
     if (!memberListRef.current) {
@@ -126,7 +133,7 @@ export function Content () {
         <ul className='flex gap-20 mt-10 overflow-x-scroll hide-scroll' ref={memberListRef}>
           {memberStreams.map((member) => (
             <MemberCard
-              key={member.twitchName}
+              key={member.liveChannelURL}
               flag={{
                 url: `https://flagcdn.com/w40/${member.country.ISOCode.toLowerCase()}.png`,
                 alt: member.country.name,
