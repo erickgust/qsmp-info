@@ -109,7 +109,7 @@ export function Content () {
   }
 
   return (
-    <section className='px-8 py-16 flex-1 flex flex-col justify-center'>
+    <section className='px-8 py-48 flex-1 flex flex-col justify-center'>
       <h1 className='font-pixel text-4xl uppercase'>
         Members of the server
       </h1>
@@ -123,7 +123,7 @@ export function Content () {
           </span>
         )}
 
-        <ul className='flex gap-20 mt-10 overflow-x-scroll hide-scroll' ref={memberListRef}>
+        <ul className='flex gap-20 mt-12 overflow-x-scroll hide-scroll' ref={memberListRef}>
           {memberStreams.map((member) => (
             <MemberCard
               key={member.twitchName}
