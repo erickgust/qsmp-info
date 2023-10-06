@@ -46,7 +46,7 @@ export function Content () {
         {showLeftArrow && (
           <span className='absolute top-1/2 -translate-y-1/2 -left-4 z-10'>
             <Button type='icon' onClick={() => handleScroll('left')}>
-              <ArrowLeft className='ml-1' />
+              <ArrowLeft type='icon' aria-label='previous' className='ml-1' />
             </Button>
           </span>
         )}
@@ -71,7 +71,7 @@ export function Content () {
         {showRightArrow && (
           <span className='absolute top-1/2 -translate-y-1/2 -right-4'>
             <Button type='icon' onClick={() => handleScroll('right')}>
-              <ArrowRight className='mr-1' />
+              <ArrowRight type='icon' aria-label='next' className='mr-1' />
             </Button>
           </span>
         )}

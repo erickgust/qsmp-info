@@ -45,7 +45,7 @@ export function MemberCard ({ name, image, flag, liveChannelURL, isLive }: Membe
 
         <div className='flex justify-between'>
           <Button variant='dark' type='icon'>
-            <Menu />
+            <Menu type='icon' aria-label='Menu' />
           </Button>
 
           <a href={liveChannelURL} target='_blank' rel='noopener noreferrer'>
