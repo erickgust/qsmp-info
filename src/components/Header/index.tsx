@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { useGlitch } from 'react-powerglitch'
 import { Button } from '../Button'
 import { ReactComponent as ExternalLinkIcon } from '@/assets/icons/external-link.svg'
